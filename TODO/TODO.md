@@ -1,0 +1,40 @@
+# TODO — Local Issue Tracker
+
+Status yang diperbolehkan: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`. Jangan tandai `DONE` hanya karena kode sudah dibuat; gunakan Definition of Done pada `AGENTS.md` dan acceptance criteria di `ARCHITECTURE.md`.
+
+| ID | Task | Status | Prioritas | Depends on | Acceptance / catatan |
+|---|---|---|---|---|---|
+| TASK-SETUP-01 | Audit environment dan repository | DONE | P0 | — | Bukti dan blocker pada docs/audit/2026-10-09.md; belum ada toolchain/project saat audit awal. Repository kemudian dibuat dan README dipush atas instruksi pengguna. |
+| TASK-SETUP-02 | Validasi dependency dan kontrak native | IN_PROGRESS | P0 | SETUP-01 | Riset sumber primer berjalan; kemampuan WebP encoder dan dukungan SDK belum dianggap terverifikasi pada Android. |
+| TASK-APP-01 | Setup Flutter application, lint, theme, test | TODO | P0 | SETUP-01, SETUP-02 | Debug build, analyzer, dan test dasar lulus. |
+| TASK-APP-02 | Navigasi dan halaman dasar | TODO | P0 | APP-01 | Home dan jalur utama bisa dinavigasi; empty state tersedia. |
+| TASK-IMG-01 | Import dan normalisasi gambar | TODO | P0 | APP-01 | Picker cancel/error, EXIF, file invalid, dan source immutable tertangani. |
+| TASK-DATA-01 | Project persistence lokal | TODO | P0 | APP-01 | Project create/save/load/rename/delete lolos round-trip test. |
+| TASK-IMG-02 | Image processing service | TODO | P0 | IMG-01 | Crop/resize/rotate/flip/alpha benar; operasi berat tidak memblokir UI. |
+| TASK-IMG-03 | Color-key background remover tanpa ML | TODO | P0 | IMG-02 | Test fixture latar polos lulus; keterbatasan hasil dijelaskan; tidak ada model AI/ML. |
+| TASK-IMG-04 | Erase/Restore brush | TODO | P0 | IMG-03 | Mask bisa diperbaiki manual dan undo; gambar sumber tetap tersimpan. |
+| TASK-IMG-05 | Outline dari alpha mask | TODO | P1 | IMG-03 | Outline mengikuti bentuk dan tidak mengisi background. |
+| TASK-EDITOR-01 | Canvas dan model layer | TODO | P0 | IMG-01, DATA-01 | Layer bisa dipilih, digeser, diubah ukuran/rotasi, disusun ulang dan diserialisasi. |
+| TASK-EDITOR-02 | Crop/transform dan background edit | TODO | P0 | EDITOR-01, IMG-02, IMG-04 | Tools bekerja, transformasi konsisten, undo/redo benar. |
+| TASK-EDITOR-03 | Text layer | TODO | P0 | EDITOR-01 | Teks dapat diedit, ditransformasi, disimpan, dan dirender sama dengan preview. |
+| TASK-EDITOR-04 | Drawing layer | TODO | P0 | EDITOR-01 | Brush, eraser, warna, ketebalan, persistensi dan rendering bekerja. |
+| TASK-EDITOR-05 | Undo/redo terpadu dan recovery | TODO | P0 | EDITOR-02, EDITOR-03, EDITOR-04 | Edit utama bisa undo/redo; penggunaan memori terkendali. |
+| TASK-EXPORT-01 | Render canvas transparan | TODO | P0 | EDITOR-02, EDITOR-03, EDITOR-04 | Alpha transparan dipertahankan; checkerboard UI tidak ikut ekspor. |
+| TASK-EXPORT-02 | WebP export dan validasi | TODO | P0 | EXPORT-01, IMG-02 | 512×512, WebP, alpha; maksimal 100 KB atau error eksplisit. |
+| TASK-EXPORT-03 | Riwayat hasil dan share sheet | TODO | P1 | EXPORT-02 | Berkas ekspor bisa ditemukan/dibagikan; cancel ditangani. |
+| TASK-WA-01 | Manajemen sticker pack | TODO | P0 | DATA-01, EXPORT-02 | Pack 3–30 sticker, metadata dan tray icon valid; invalid pack ditolak. |
+| TASK-WA-02 | Kotlin ContentProvider | TODO | P0 | WA-01 | Provider menyajikan metadata dan file stiker yang valid; error provider ditangani. |
+| TASK-WA-03 | Integrasi intent WhatsApp | TODO | P0 | WA-02 | Add-pack diuji di perangkat dengan WhatsApp; cancel tidak dianggap sukses. |
+| TASK-QA-01 | End-to-end workflow | TODO | P0 | EXPORT-03, WA-03 | Import→edit→save/reopen→export→add pack diuji dan dicatat. |
+| TASK-QA-02 | Privacy, robustness, performance | TODO | P0 | Semua MVP | Mode pesawat, file besar, storage penuh, permission denied dan WhatsApp missing diuji. |
+| TASK-DOC-01 | Dokumentasi dan handoff final | TODO | P1 | QA-01, QA-02 | Setup, dependency, test, batasan, dan status task akurat untuk developer berikutnya. |
+
+## Catatan Perubahan Status
+
+Tambahkan catatan singkat di bawah ini saat mengubah status task penting.
+
+| Tanggal | ID | Perubahan | Bukti / catatan |
+|---|---|---|---|
+| 2026-10-09 | — | Initial planning baseline | Belum ada task development yang dinyatakan selesai. |
+| 2026-10-09 | TASK-SETUP-01 | TODO → DONE | Audit pada docs/audit/2026-10-09.md. Tidak ada source atau toolchain pada kondisi awal; minSdk belum tersedia. README first commit c81c4f7 berhasil dipush ke origin/master. |
+| 2026-10-09 | TASK-SETUP-02 | TODO → IN_PROGRESS | Verifikasi dependency, WebP alpha, dan kontrak WhatsApp dari sumber primer sedang dilakukan. |

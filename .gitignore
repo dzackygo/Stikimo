@@ -1,0 +1,25 @@
+# Flutter/Dart dan hasil build
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Konfigurasi lokal IDE/Android dan signing
+.idea/
+*.iml
+android/.gradle/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# Rahasia dan file lokal
+.env
+.env.*
+*.pem
+*.log
+
+# pubspec.lock harus dilacak untuk aplikasi Flutter.
