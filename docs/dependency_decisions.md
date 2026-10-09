@@ -11,8 +11,8 @@ Verifikasi sumber primer: 9 Oktober 2026. Toolchain aktual: Flutter **3.47.5**, 
 | image_picker | 1.2.4 | Dart 3.11; Flutter 3.41; Android 24 | Apache-2.0/BSD-3-Clause | Photo Picker dan kamera; cancel dan lost-data recovery wajib |
 | path_provider | 2.1.6 | Dart 3.10; Flutter 3.38; Android 24 | BSD-3-Clause | Direktori private aplikasi |
 | sqflite | 2.4.4+1 | Dart 3.12; Flutter 3.44 | BSD-2-Clause | Metadata SQLite; gambar tetap berkas terpisah |
-| uuid | 4.6.0 | Kompatibilitas akhir oleh resolver | MIT | ID stabil untuk proyek/layer/stiker/pack |
-| flutter_lints | 6.0.0 | Kompatibilitas akhir oleh resolver | BSD-3-Clause | Lint resmi; dependency development |
+| uuid | 4.6.0 | Dart 3.0 | MIT | ID stabil untuk proyek/layer/stiker/pack |
+| flutter_lints | 6.0.0 | Dart 3.8 | BSD-3-Clause | Lint resmi; dependency development |
 
 Semua kandidat mendukung Android menurut metadata sumber primer. Package dipilih untuk kebutuhan MVP, tanpa inference/model ML/backend/analytics/network service. Package transitif wajib diperiksa setelah lockfile tersedia. Navigasi awal memakai Navigator bawaan agar tidak menambah dependency routing sebelum diperlukan. Kandidat terbaru efektif memerlukan Flutter 3.44/Dart 3.12 dan minSdk24; SDK aktual di atas memenuhi requirement bahasa/framework.
 
