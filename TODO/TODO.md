@@ -7,7 +7,7 @@ Status yang diperbolehkan: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`. Jangan tand
 | TASK-SETUP-01 | Audit environment dan repository | DONE | P0 | — | Bukti dan blocker pada docs/audit/2026-10-09.md; belum ada toolchain/project saat audit awal. Repository kemudian dibuat dan README dipush atas instruksi pengguna. |
 | TASK-SETUP-02 | Validasi dependency dan kontrak native | DONE | P0 | SETUP-01 | Sumber/lisensi/API diverifikasi; resolver dan lockfile tersedia; dua test codec engine Flutter, analyzer, format lulus. Bukti Android tetap acceptance export/provider; lihat docs/dependency_decisions.md. |
 | TASK-APP-01 | Setup Flutter application, lint, theme, test | DONE | P0 | SETUP-01, SETUP-02 | 7 test, analyzer dan format PASS; APK debug dibangun, dipasang, dan dibuka di emulator API36. Bukti pada docs/task_reports.md. |
-| TASK-APP-02 | Navigasi dan halaman dasar | TODO | P0 | APP-01 | Home dan jalur utama bisa dinavigasi; empty state tersedia. |
+| TASK-APP-02 | Navigasi dan halaman dasar | DONE | P0 | APP-01 | Empat tujuan dan empty state; stack/AppBar/Android back serta layar 320 dp dengan teks 2× lulus widget test. |
 | TASK-IMG-01 | Import dan normalisasi gambar | TODO | P0 | APP-01 | Picker cancel/error, EXIF, file invalid, dan source immutable tertangani. |
 | TASK-DATA-01 | Project persistence lokal | TODO | P0 | APP-01 | Project create/save/load/rename/duplicate/delete lolos round-trip test; source, mask, parameter, urutan dan properti layer terjaga. |
 | TASK-IMG-02 | Image processing service | TODO | P0 | IMG-01 | Crop/resize/rotate/flip/alpha benar; operasi berat tidak memblokir UI. |
@@ -40,3 +40,4 @@ Tambahkan catatan singkat di bawah ini saat mengubah status task penting.
 | 2026-10-09 | TASK-SETUP-02 | TODO → IN_PROGRESS | Verifikasi dependency, WebP alpha, dan kontrak WhatsApp dari sumber primer sedang dilakukan. |
 | 2026-10-09 | TASK-SETUP-02 | IN_PROGRESS → DONE | pub get PASS; lockfile dilacak bersama keputusan dependency; 2 codec tests PASS, analyze no issues, format/diff check PASS. Runtime Android belum diklaim. |
 | 2026-10-09 | TASK-APP-01 | IN_PROGRESS → DONE | 7 test dan analyze PASS; build APK PASS; adb install/start PASS; screenshot app01.png diperiksa, logcat AndroidRuntime/flutter error kosong. |
+| 2026-10-09 | TASK-APP-02 | TODO → IN_PROGRESS → DONE | Suite awal 10 PASS; test tambahan Android back PASS (4 test navigasi); analyzer PASS, review tidak menemukan issue material. |

@@ -10,7 +10,7 @@ Dokumen ini memecah MVP menjadi bagian implementasi kecil dengan dependensi dan 
 - **Framework:** Flutter + Dart. Periksa `flutter --version` sebelum mulai; pada 9 Oktober 2026, dokumentasi Flutter mencantumkan Flutter 3.47 dan Dart 3.13 sebagai rilis stabil terbaru yang relevan. Gunakan stable yang terpasang/kompatibel dan lock versinya; jangan melakukan upgrade SDK global tanpa kebutuhan.
 - **Arsitektur:** feature-first + MVVM ringan, dengan pemisahan Presentation, Domain, dan Data untuk logika yang perlu diuji. Tidak perlu menerapkan Clean Architecture secara ritual pada setiap model sederhana.
 - **State management:** `flutter_riverpod` untuk state teruji dan dependency injection.
-- **Navigation:** `go_router` jika aplikasi memakai beberapa route; jika MVP sangat kecil, evaluasi apakah cukup memakai Navigator bawaan. Pilih satu, jangan memasang keduanya tanpa alasan.
+- **Navigation:** Navigator bawaan dengan `MaterialPageRoute<void>` dipilih pada APP-02. Alur Android berupa stack halaman sederhana dan belum memerlukan deep link; tidak menambah dependency router.
 - **Image processing:** package `image` (Dart Image Library) untuk decode, transformasi, kompositing/encoding yang didukung; versi dipilih dan dikunci setelah verifikasi kompatibilitas. Operasi berat dijalankan di isolate.
 - **Import:** `image_picker` atau plugin resmi/terpelihara yang cocok dengan Android Photo Picker. Periksa perilaku Android dan dukungan SDK aktual.
 - **File storage:** `path_provider` untuk direktori aplikasi. Gambar disimpan sebagai file terpisah.

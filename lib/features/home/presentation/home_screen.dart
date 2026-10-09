@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../image_import/presentation/new_sticker_screen.dart';
+import '../../projects/presentation/projects_screen.dart';
+import '../../whatsapp_packs/presentation/packs_screen.dart';
+import 'about_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -37,6 +42,28 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text('Editor stiker sedang disiapkan.'),
+                  const SizedBox(height: 24),
+                  FilledButton.icon(
+                    onPressed: () => _open(context, const NewStickerScreen()),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Buat stiker'),
+                  ),
+                  const SizedBox(height: 16),
+                  _Destination(
+                    icon: Icons.folder_open_outlined,
+                    label: 'Proyek saya',
+                    onTap: () => _open(context, const ProjectsScreen()),
+                  ),
+                  _Destination(
+                    icon: Icons.collections_bookmark_outlined,
+                    label: 'Paket stiker',
+                    onTap: () => _open(context, const PacksScreen()),
+                  ),
+                  _Destination(
+                    icon: Icons.privacy_tip_outlined,
+                    label: 'Tentang & privasi',
+                    onTap: () => _open(context, const AboutScreen()),
+                  ),
                 ],
               ),
             ),
@@ -45,4 +72,31 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _open(BuildContext context, Widget page) {
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+  }
+}
+
+class _Destination extends StatelessWidget {
+  const _Destination({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    clipBehavior: Clip.antiAlias,
+    child: ListTile(
+      leading: Icon(icon),
+      title: Text(label),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: onTap,
+    ),
+  );
 }

@@ -32,3 +32,17 @@ Scope: Kotlin host `com.dzackygo.stikimo`, entry point/ProviderScope, Material 3
 - Merged manifest mempertahankan konfigurasi backup privat. Android 16/API36 AOSP emulator tersedia; WhatsApp belum terpasang.
 
 Acceptance build/debug launch/theme/error fallback/lint/test terpenuhi. Belum ada import/editor atau klaim kompatibilitas WhatsApp. Task berikutnya: APP-02.
+
+## TASK-APP-02 — Navigasi dan halaman dasar — DONE
+
+Home membuka Buat stiker, Proyek saya, Paket stiker, dan Tentang & privasi melalui Navigator bawaan. Halaman baru memakai empty state jujur dan scroll untuk teks besar. Proyek → Buat stiker mempertahankan stack kembali; belum ada aksi import/export/add-pack yang mengklaim berfungsi.
+
+File: `lib/features/*/presentation/*_screen.dart`, `lib/core/widgets/{page_body,empty_state}.dart`, `test/app/navigation_test.dart`, keputusan navigasi pada arsitektur dan catatan bootstrap wrapper pada setup.
+
+- Test navigasi awal FAIL sebelum implementasi (tujuan belum ada).
+- `flutter test --no-pub --reporter expanded` PASS 10 test setelah implementasi.
+- Tambahan test Android system back: `flutter test --no-pub test/app/navigation_test.dart --reporter expanded` PASS 4 test, termasuk keempat tujuan, stack bertingkat, dan layar 320×568/teks 2×.
+- `dart format lib test` dijalankan; `flutter analyze --no-pub` PASS.
+- Review independen tidak menemukan issue material. Tidak ada perubahan native; build berikutnya akan memverifikasi integrasi import Android.
+
+Acceptance navigasi/empty state terpenuhi. Batas fitur belum tersedia dijelaskan pada UI. Task berikutnya: IMG-01.

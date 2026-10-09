@@ -33,6 +33,8 @@ flutter run -d <android-device-id>
 
 `pubspec.lock` harus tetap dilacak di Git. `android/local.properties`, cache, SDK, build output, dan signing keys tidak dilacak. Identitas Android awal adalah `com.dzackygo.stikimo`. Signing release belum disiapkan; artifact debug bukan rilis produksi.
 
+Pada clone baru, perintah Flutter build/run menyiapkan Gradle wrapper otomatis dari cache SDK. Perintah `android/gradlew` langsung tersedia setelah bootstrap tersebut; tidak perlu menjalankan ulang `flutter create`.
+
 ## Privasi development
 
 Manifest utama tidak meminta INTERNET atau izin storage luas. Manifest debug/profile bawaan Flutter memakai INTERNET untuk tooling development/VM service. Fitur aplikasi tidak membuat request jaringan; pengujian mode pesawat dan audit runtime tetap diperlukan sebelum MVP dianggap selesai.
