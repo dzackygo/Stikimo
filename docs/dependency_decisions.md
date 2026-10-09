@@ -48,6 +48,12 @@ Referensi resmi WhatsApp/stickers dipin pada commit `06144a1f6077bbb346e1230032f
 
 ## Batas bukti
 
+### Temuan implementasi image 4.10.1 pada IMG-01
+
+Source decoder JPEG mengalokasikan blok DCT ketika startDecode/readInfo dan parser EXIF tidak aman untuk rantai IFD siklik. Import memakai preflight marker/dimensi serta sanitasi APP metadata dengan pembacaan orientasi terbatas sebelum decode. PNG memakai validasi inflasi terbatas sebelum decoder, karena batas dimensi saja tidak membatasi payload zlib. Lihat [kontrak import](image_import.md).
+
+Fixture manual juga menemukan `fillRect` dengan alphaBlend default dan alpha parsial dapat menghasilkan alpha 0 pada versi ini. Generator fixture memakai `alphaBlend: false` dan assert alpha; operasi drawing/compositing berikutnya wajib memverifikasi nilai piksel, bukan mengandalkan default blending. Tidak ada dependency diganti atau source package dimodifikasi.
+
 `TASK-SETUP-02` memvalidasi dukungan/lisensi/API/keputusan dependency. Lockfile harus dilacak begitu Pub digunakan. Bukti output Android dan perangkat tetap acceptance task import/export/provider/WhatsApp. `TASK-APP-01` membutuhkan analyzer, test, APK debug, dan aplikasi benar-benar dibuka; scaffold saja tidak cukup.
 
 ## Hasil verifikasi aktual

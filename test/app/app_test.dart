@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stikimo/app/app.dart';
+
+import '../helpers/test_app.dart';
+
 import 'package:stikimo/core/errors/app_error_view.dart';
 import 'package:stikimo/main.dart' as bootstrap;
 
 void main() {
   testWidgets('opens_stikimo_with_local_privacy_message', (tester) async {
-    await tester.pumpWidget(const StikimoApp());
+    await tester.pumpWidget(testApp());
     expect(find.text('Stikimo'), findsOneWidget);
     expect(find.text('Foto pribadi, tetap di perangkat.'), findsOneWidget);
     expect(tester.takeException(), isNull);
@@ -15,7 +17,7 @@ void main() {
   testWidgets('uses_dark_theme_when_system_requests_it', (tester) async {
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
     addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
-    await tester.pumpWidget(const StikimoApp());
+    await tester.pumpWidget(testApp());
     expect(
       Theme.of(tester.element(find.byType(Scaffold))).brightness,
       Brightness.dark,
@@ -29,7 +31,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    await tester.pumpWidget(const StikimoApp());
+    await tester.pumpWidget(testApp());
     expect(tester.takeException(), isNull);
   });
 

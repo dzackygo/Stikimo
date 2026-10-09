@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stikimo/app/app.dart';
+
+import '../helpers/test_app.dart';
 
 void main() {
   testWidgets('home opens each destination and back returns home', (
     tester,
   ) async {
-    await tester.pumpWidget(const StikimoApp());
+    await tester.pumpWidget(testApp());
     for (final destination in <String, String>{
       'Buat stiker': 'Mulai dari foto',
       'Proyek saya': 'Belum ada proyek',
@@ -27,7 +28,7 @@ void main() {
   testWidgets('empty projects opens creation and back preserves navigation', (
     tester,
   ) async {
-    await tester.pumpWidget(const StikimoApp());
+    await tester.pumpWidget(testApp());
     await tester.tap(find.text('Proyek saya'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Buat stiker'));
@@ -41,7 +42,7 @@ void main() {
   testWidgets('Android back returns from a destination to home', (
     tester,
   ) async {
-    await tester.pumpWidget(const StikimoApp());
+    await tester.pumpWidget(testApp());
     await tester.tap(find.text('Buat stiker'));
     await tester.pumpAndSettle();
     await tester.binding.handlePopRoute();
@@ -59,7 +60,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    await tester.pumpWidget(const StikimoApp());
+    await tester.pumpWidget(testApp());
     for (final label in [
       'Buat stiker',
       'Proyek saya',

@@ -46,3 +46,22 @@ File: `lib/features/*/presentation/*_screen.dart`, `lib/core/widgets/{page_body,
 - Review independen tidak menemukan issue material. Tidak ada perubahan native; build berikutnya akan memverifikasi integrasi import Android.
 
 Acceptance navigasi/empty state terpenuhi. Batas fitur belum tersedia dijelaskan pada UI. Task berikutnya: IMG-01.
+
+## TASK-IMG-01 — Import dan normalisasi gambar — DONE
+
+Implementasi: Photo Picker galeri, cancellation/error/busy state, recovery hasil picker saat startup, validasi JPEG/PNG sebelum decode, normalisasi di isolate, source immutable + working PNG tanpa metadata di no-backup, satu draf aktif dengan publikasi manifest atomik dan cleanup. Kontrak/batas: [image_import.md](image_import.md).
+
+File utama: `lib/features/image_import/{data,domain,presentation}/`, `lib/core/storage/app_storage.dart`, Home, Kotlin MainActivity (channel noBackupPath), test unit/widget/storage, `tool/create_import_fixtures.dart` serta dokumen dependency/import.
+
+- Tahap RED normalizer menunjukkan UnimplementedError sebelum implementasi; sesudah implementasi dan review, `flutter test --no-pub --reporter expanded` PASS **108 test**. Log lokal `build/verification/img01-tests.log`.
+- `dart format --output=none --set-exit-if-changed lib test tool` PASS, 0 perubahan; `flutter analyze --no-pub` PASS, no issues.
+- `flutter build apk --debug --no-pub` PASS setelah guard final, 33,1 detik. APK SHA256: `1f63239895bbcfaf0ab45ccc71bf5f360a9d6d935eceb54bc060cd8af2b89208`.
+- Review menemukan EXIF siklik dapat membuat decoder library macet; APP1 kini disanitasi dengan parser orientation terbatas, termasuk setelah SOS. Regresi siklus sebelum/sesudah scan dan JPEG tanpa Huffman table lulus.
+- Review lifecycle menemukan draft lama menumpuk; current.json dan cleanup ditambahkan, dengan test restart/cancel/error/manifest/path/publication failure.
+- Pemeriksaan visual awal menemukan persegi fixture transparan. Pemeriksaan piksel membuktikan bug generator fixture (`fillRect` default alphaBlend), bukan normalizer. Generator diperbaiki, diberi assert alpha 180, dan ditambah regresi multicolor resize.
+- Review lanjutan menemukan decoder mencoba recovery marker JPEG asing. Allowlist marker ditambahkan; regresi penolakan marker asing PASS. Review final tidak menemukan issue material tersisa.
+- Android final: PNG 3072×1536 → 2048×1024, persegi RGBA (240,160,30,180) terjaga pada berkas privat; SHA256 source `566cbd0603d27519d37a183dd5d31cae356ebece02fd57e5c94b5cf7d984f774` sama dengan fixture host. JPEG orientation 6 → 1024×2048, source SHA256 `ca7d5949fa0aaef8ee1575cd3561eb5c5d934f235ec4e5ef50a3f4d219dbc34d` identik host.
+- Cancel mempertahankan preview dan ID manifest. Penggantian menyisakan tepat satu direktori UUID + current.json. APK terbaru dipasang lalu force-stop/relaunch; Home menampilkan Lanjutkan foto pilihan dan membuka draf JPEG yang sama. `logcat -d -s AndroidRuntime:E flutter:E` kosong.
+- Screenshot `build/verification/img01-final-png.png`, `img01-final-jpeg.png`, dan `img01-final-restart-home.png` diperiksa. Fixture JPEG yang ditimpa pada path sama sempat dibaca dari cache picker lama; verifikasi ulang memakai filename baru menunjukkan hash/warna benar. Petunjuk manual sekarang menggunakan nama unik untuk fixture yang diubah.
+
+Acceptance IMG-01 terpenuhi. Kamera tidak ditawarkan; input selain JPEG/PNG ditolak. Keterbatasan decoder tiny Adam7 dan kebijakan memori dicatat; disk penuh di tengah write dan activity death saat picker masih perlu QA perangkat (adapter recovery teruji dengan fake). Task berikutnya: DATA-01.

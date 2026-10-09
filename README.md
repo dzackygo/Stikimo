@@ -4,7 +4,7 @@ Aplikasi Android Flutter untuk membuat dan mengedit stiker dengan pemrosesan gam
 
 ## Status proyek
 
-Audit, dependency, dan fondasi Flutter Android selesai. APK debug berhasil dibuka di emulator Android 16; 7 test dasar dan analyzer lulus. Implementasi fitur berlanjut mengikuti [tracker](TODO/TODO.md) dan [catatan verifikasi](docs/task_reports.md). Integrasi WhatsApp belum diverifikasi.
+Fondasi, navigasi, dan import JPEG/PNG sudah berjalan di emulator Android 16. Foto sumber tetap utuh, preview dinormalisasi, dan draf aktif pulih setelah restart. Sebanyak 108 test, analyzer, serta build debug lulus. Penyimpanan proyek, editor, ekspor, dan WhatsApp berlanjut mengikuti [tracker](TODO/TODO.md) dan [catatan verifikasi](docs/task_reports.md).
 
 ## Spesifikasi proyek
 

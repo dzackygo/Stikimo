@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../image_import/presentation/import_controller.dart';
 import '../../image_import/presentation/new_sticker_screen.dart';
 import '../../projects/presentation/projects_screen.dart';
 import '../../whatsapp_packs/presentation/packs_screen.dart';
 import 'about_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Recovery dimulai satu kali di awal aplikasi, di luar fase build.
+    Future.microtask(() {
+      if (mounted) ref.read(importControllerProvider.notifier).recover();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final importState = ref.watch(importControllerProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Stikimo')),
       body: SafeArea(
@@ -42,6 +59,21 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text('Editor stiker sedang disiapkan.'),
+                  if (importState.message != null) ...[
+                    const SizedBox(height: 12),
+                    Semantics(
+                      liveRegion: true,
+                      child: Text(importState.message!),
+                    ),
+                  ],
+                  if (importState.image != null) ...[
+                    const SizedBox(height: 16),
+                    TextButton.icon(
+                      onPressed: () => _open(context, const NewStickerScreen()),
+                      icon: const Icon(Icons.image_outlined),
+                      label: const Text('Lanjutkan foto pilihan'),
+                    ),
+                  ],
                   const SizedBox(height: 24),
                   FilledButton.icon(
                     onPressed: () => _open(context, const NewStickerScreen()),
