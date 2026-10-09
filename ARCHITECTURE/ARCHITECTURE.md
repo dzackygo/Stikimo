@@ -23,6 +23,8 @@ Dokumen ini memecah MVP menjadi bagian implementasi kecil dengan dependensi dan 
 
 Versi final dependency tidak boleh ditebak. Jalankan `flutter pub add`/cek pub.dev, tinjau dukungan SDK, lisensi, dan changelog, lalu commit `pubspec.lock`. Referensi awal: https://docs.flutter.dev/release/whats-new dan https://pub.dev/packages/image.
 
+Keputusan audit 9 Oktober 2026, versi SDK aktual, lisensi, batas WebP, dan kontrak WhatsApp yang dipin dicatat di `docs/dependency_decisions.md`. Verifikasi runtime tetap mengikuti acceptance task terkait.
+
 ## 3. Larangan Runtime
 
 Tidak boleh ada:
@@ -85,10 +87,10 @@ lib/
       domain/
       presentation/
 android/app/src/main/kotlin/<package>/
-  test/
-    core/
-    features/
-  integration_test/
+test/
+  core/
+  features/
+integration_test/
 ```
 
 Struktur folder boleh disesuaikan dengan standar repository yang sudah ada. Jangan memindahkan banyak folder bila proyek sudah memiliki struktur yang sehat.
@@ -124,8 +126,9 @@ Jenis layer MVP: `image`, `text`, `drawing`, dan `shape/decorative` bila shape s
 
 ### `StickerPack` dan `Sticker`
 
-- Pack: `id`, `name`, `identifier`, `trayIconPath`, `createdAt`, `updatedAt`.
-- Sticker: `id`, `packId`, `webpPath`, `width`, `height`, `byteSize`, `order`, emoji tags jika dimasukkan dalam metadata WhatsApp.
+- Pack: `id`, `name`, `publisher`, `identifier`, `trayIconPath`, `imageDataVersion`, `createdAt`, `updatedAt`.
+- Sticker: `id`, `packId`, `webpPath`, `width`, `height`, `byteSize`, `order`, 1–3 emoji tags sesuai validator resmi.
+- Batas validator statis: sticker 102400 byte, tray 51200 byte; tray dipilih PNG 96 × 96. `imageDataVersion` berubah saat isi/tray berubah.
 - Jangan menganggap file WebP saja cukup untuk integrasi pack; integrasi memerlukan metadata dan kontrak native provider.
 
 ## 7. Batas Modul
@@ -217,7 +220,7 @@ Jenis layer MVP: `image`, `text`, `drawing`, dan `shape/decorative` bila shape s
 
 **TASK-DATA-01: Project persistence** (depends on APP-01)
 - SQLite metadata, file assets, serialisasi dokumen versi.
-- **Selesai jika:** project create/save/load/rename/delete berjalan dan tes round-trip mempertahankan data.
+- **Selesai jika:** project create/save/load/rename/duplicate/delete berjalan dan tes round-trip mempertahankan urutan/properti layer, sumber immutable, serta mask/parameter background removal yang diperlukan Restore.
 
 ### Phase 3 — Core image processing tanpa AI/ML
 
@@ -293,7 +296,7 @@ Jenis layer MVP: `image`, `text`, `drawing`, dan `shape/decorative` bila shape s
 - Import → edit → save/reopen → export → build pack → add to WhatsApp.
 - **Selesai jika:** test manual dengan checklist terdokumentasi dan tidak ada blocker P0.
 
-**TASK-QA-02: Privacy, robustness, performance** (depends on all MVP tasks)
+**TASK-QA-02: Privacy, robustness, performance** (depends on APP-02, IMG-01–05, DATA-01, EDITOR-01–05, EXPORT-01–03, WA-01–03; excludes itself and DOC-01)
 - Mode pesawat, file besar, storage penuh, app restart, izin ditolak, paket WhatsApp tidak ada.
 - **Selesai jika:** tidak ada outbound request aplikasi yang tidak diharapkan, kegagalan ditangani, dan risiko tersisa didokumentasikan.
 
