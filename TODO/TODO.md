@@ -9,7 +9,7 @@ Status yang diperbolehkan: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`. Jangan tand
 | TASK-APP-01 | Setup Flutter application, lint, theme, test | DONE | P0 | SETUP-01, SETUP-02 | 7 test, analyzer dan format PASS; APK debug dibangun, dipasang, dan dibuka di emulator API36. Bukti pada docs/task_reports.md. |
 | TASK-APP-02 | Navigasi dan halaman dasar | DONE | P0 | APP-01 | Empat tujuan dan empty state; stack/AppBar/Android back serta layar 320 dp dengan teks 2× lulus widget test. |
 | TASK-IMG-01 | Import dan normalisasi gambar | DONE | P0 | APP-01 | JPEG/PNG, batas input, EXIF, alpha, source immutable, cancel/error dan draft recovery teruji; 108 test PASS, APK/Photo Picker/restart API36 PASS. |
-| TASK-DATA-01 | Project persistence lokal | TODO | P0 | APP-01 | Project create/save/load/rename/duplicate/delete lolos round-trip test; source, mask, parameter, urutan dan properti layer terjaga. |
+| TASK-DATA-01 | Project persistence lokal | DONE | P0 | APP-01 | CRUD, layer/mask round-trip dan source immutable; 173 test host PASS, 5 SQLite Android PASS, build dan UI restart PASS. |
 | TASK-IMG-02 | Image processing service | TODO | P0 | IMG-01 | Crop/resize/rotate/flip/alpha benar; operasi berat tidak memblokir UI. |
 | TASK-IMG-03 | Color-key background remover tanpa ML | TODO | P0 | IMG-02 | Test fixture latar polos lulus; keterbatasan hasil dijelaskan; tidak ada model AI/ML. |
 | TASK-IMG-04 | Erase/Restore brush | TODO | P0 | IMG-03 | Mask bisa diperbaiki manual dan undo; gambar sumber tetap tersimpan. |
@@ -42,3 +42,4 @@ Tambahkan catatan singkat di bawah ini saat mengubah status task penting.
 | 2026-10-09 | TASK-APP-01 | IN_PROGRESS → DONE | 7 test dan analyze PASS; build APK PASS; adb install/start PASS; screenshot app01.png diperiksa, logcat AndroidRuntime/flutter error kosong. |
 | 2026-10-09 | TASK-APP-02 | TODO → IN_PROGRESS → DONE | Suite awal 10 PASS; test tambahan Android back PASS (4 test navigasi); analyzer PASS, review tidak menemukan issue material. |
 | 2026-10-09 | TASK-IMG-01 | TODO → IN_PROGRESS → DONE | 108 test, analyzer, format dan APK PASS. Photo Picker PNG/JPEG, source hash, cancel, replacement cleanup dan restart terverifikasi Android16; lihat docs/task_reports.md. |
+| 2026-10-10 | TASK-DATA-01 | IN_PROGRESS → DONE | 173 host PASS/1 skip symlink Windows, 5 SQLite Android PASS mencakup symlink/recovery; analyzer/format/build PASS, UI CRUD dan buka ulang salinan setelah hapus asal PASS. |

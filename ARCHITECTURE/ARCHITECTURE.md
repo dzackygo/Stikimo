@@ -15,6 +15,7 @@ Dokumen ini memecah MVP menjadi bagian implementasi kecil dengan dependensi dan 
 - **Import:** `image_picker` atau plugin resmi/terpelihara yang cocok dengan Android Photo Picker. Periksa perilaku Android dan dukungan SDK aktual.
 - **File storage:** `path_provider` untuk direktori aplikasi. Gambar disimpan sebagai file terpisah.
 - **Metadata lokal:** `sqflite` untuk proyek, pack, sticker, dan indeks aset; file proyek dapat menyimpan JSON layer bila skema lebih nyaman. Jangan menyimpan file biner gambar besar di kolom DB.
+- **Persistence proyek v1:** SQLite menunjuk revisi JSON immutable; aset/revisi ditulis dan di-flush sebelum transaksi publikasi. Save memeriksa revision ID agar state usang tidak menimpa perubahan baru. Duplikasi menyalin aset ke kepemilikan proyek terpisah. Kontrak koordinat, recovery, dan batas ada pada `docs/project_persistence.md`; revisi/aset committed dipertahankan hingga kebijakan retensi EDITOR-05.
 - **ID:** UUID stabil untuk proyek, layer, pack, dan sticker.
 - **Native Android:** Kotlin `ContentProvider` + intent WhatsApp untuk dynamic sticker packs. Implementasikan sebagai bagian Android host dan akses melalui platform channel hanya untuk operasi yang dibutuhkan Flutter.
 - **Testing:** `flutter_test`, unit test Dart, widget test, `integration_test`, dan test kontrak Kotlin/provider yang praktis.

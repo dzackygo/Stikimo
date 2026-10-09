@@ -23,9 +23,10 @@ Build pertama memasang CMake **3.22.1** untuk plugin native. Seluruh paket SDK t
 
 ```powershell
 flutter pub get
-dart format --output=none --set-exit-if-changed lib test
+dart format --output=none --set-exit-if-changed lib test integration_test
 flutter analyze
 flutter test
+flutter test integration_test/project_repository_test.dart -d <android-device-id>
 flutter build apk --debug
 flutter devices
 flutter run -d <android-device-id>
@@ -34,6 +35,8 @@ flutter run -d <android-device-id>
 `pubspec.lock` harus tetap dilacak di Git. `android/local.properties`, cache, SDK, build output, dan signing keys tidak dilacak. Identitas Android awal adalah `com.dzackygo.stikimo`. Signing release belum disiapkan; artifact debug bukan rilis produksi.
 
 Pada clone baru, perintah Flutter build/run menyiapkan Gradle wrapper otomatis dari cache SDK. Perintah `android/gradlew` langsung tersedia setelah bootstrap tersebut; tidak perlu menjalankan ulang `flutter create`.
+
+Integration test persistence memakai SQLite native dan direktori fixture unik di no-backup; direktori fixture dibersihkan setelah test. Gunakan emulator khusus pengujian tanpa proyek pribadi: runner Flutter memasang APK dengan entry point test dan pada verifikasi ini menghapus instalasi/data aplikasi saat selesai. Jalankan kembali `flutter build apk --debug` atau `flutter run` untuk mendapatkan aplikasi biasa.
 
 ## Privasi development
 

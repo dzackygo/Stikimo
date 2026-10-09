@@ -65,3 +65,21 @@ File utama: `lib/features/image_import/{data,domain,presentation}/`, `lib/core/s
 - Screenshot `build/verification/img01-final-png.png`, `img01-final-jpeg.png`, dan `img01-final-restart-home.png` diperiksa. Fixture JPEG yang ditimpa pada path sama sempat dibaca dari cache picker lama; verifikasi ulang memakai filename baru menunjukkan hash/warna benar. Petunjuk manual sekarang menggunakan nama unik untuk fixture yang diubah.
 
 Acceptance IMG-01 terpenuhi. Kamera tidak ditawarkan; input selain JPEG/PNG ditolak. Keterbatasan decoder tiny Adam7 dan kebijakan memori dicatat; disk penuh di tengah write dan activity death saat picker masih perlu QA perangkat (adapter recovery teruji dengan fake). Task berikutnya: DATA-01.
+
+## TASK-DATA-01 — Project persistence lokal — DONE
+
+Scope: model dokumen JSON v1 dengan image/text/drawing layer, SQLite metadata, aset/revisi immutable, save dengan pemeriksaan revisi, create/load/rename/duplicate/delete, recovery file belum terbit dan tombstone, serta UI pengelolaan proyek. Draf import disalin ke aset milik proyek; mengganti draf tidak menghapus foto proyek. Kontrak lengkap: [project_persistence.md](project_persistence.md).
+
+File utama: `lib/features/projects/{domain,data,presentation}/`, integrasi NewStickerScreen, test domain/filesystem/widget, `integration_test/project_repository_test.dart`, dan dependency SDK development `integration_test` beserta lockfile/lisensi.
+
+- Model/domain: 52 test PASS, termasuk properti dan urutan layer, mask/parameter background, snapshot immutable, batas nilai/JSON dan versi asing.
+- `flutter test --no-pub --reporter expanded` — **173 PASS, 1 SKIP**. Skip symlink Windows karena privilege host; kasus yang sama diverifikasi pada Android. Log lokal `build/verification/data01-tests.log`.
+- `dart format --output=none --set-exit-if-changed lib test integration_test` — PASS, 50 berkas/0 perubahan. `flutter analyze --no-pub` — PASS, no issues.
+- `flutter test integration_test/project_repository_test.dart -d emulator-5554 --no-pub --reporter expanded` — **5 PASS** memakai SQLite native Android 16. Meliputi tutup/buka repository, exact round-trip semua tipe layer/mask, salinan aset independen, revisi usang, trigger kegagalan transaksi, versi asing/file hilang, cleanup staging/unpublished/tombstone, serta symlink yang ditolak tanpa mengubah target. Log `build/verification/data01-integration-final.log`.
+- Review independen menemukan retry belum membuka ulang provider repository yang gagal inisialisasi; diperbaiki dan dilindungi widget test. Review final tidak menemukan issue material.
+- `flutter build apk --debug --no-pub` — PASS, 23,9 detik; entry point aplikasi biasa dibangun ulang setelah integration test. SHA256 APK: `108d73ac8e351dbffb157b6fbc14c8dd4520a13795ef7a4a6bf67c2288681f29`.
+- UI Android: import fixture JPEG, simpan, rename, duplicate, hapus asal melalui konfirmasi, force-stop/relaunch, lalu buka salinan — PASS. Hash sumber kedua namespace sama dengan galeri (`ca7d5949fa0aaef8ee1575cd3561eb5c5d934f235ec4e5ef50a3f4d219dbc34d`); setelah penghapusan hanya salinan tersisa dan preview portrait benar. Screenshot `data01-duplicate.png` dan `data01-reopened.png` diperiksa. Log `data01-runtime-errors.log` kosong.
+
+Keterbatasan: kegagalan transaksi dan keadaan file terputus disimulasikan; pemadaman perangkat fisik/disk penuh belum diuji. Revisi/aset committed dipertahankan hingga kontrak retensi EDITOR-05. Integration runner menghapus instalasi/data aplikasi uji; petunjuk setup mewajibkan emulator khusus tanpa proyek pribadi. Editor interaktif belum diklaim oleh task ini.
+
+Acceptance DATA-01 terpenuhi. Task berikutnya: IMG-02, transformasi gambar di isolate dan verifikasi alpha.

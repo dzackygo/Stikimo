@@ -48,6 +48,10 @@ Referensi resmi WhatsApp/stickers dipin pada commit `06144a1f6077bbb346e1230032f
 
 ## Batas bukti
 
+### Pengujian SQLite Android pada DATA-01
+
+`integration_test` ditambahkan sebagai dev dependency dari Flutter SDK 3.47.5 untuk menguji repository dengan plugin SQLite sungguhan pada emulator, sesuai [panduan Flutter](https://docs.flutter.dev/testing/integration-tests). Tidak menambah layanan atau dependency runtime aplikasi. Resolver menambahkan paket SDK `integration_test`, `flutter_driver`, `fuchsia_remote_debug_protocol` serta paket test `file` 7.0.1, `process` 5.0.6, `sync_http` 0.3.1, dan `webdriver` 3.2.0. Lisensi BSD pada SDK/file/process/sync_http serta Apache-2.0 pada webdriver diperiksa. Package tooling dapat memakai transport lokal untuk test; tidak menjadi fitur jaringan aplikasi produksi. Lockfile hasil resolver dilacak.
+
 ### Temuan implementasi image 4.10.1 pada IMG-01
 
 Source decoder JPEG mengalokasikan blok DCT ketika startDecode/readInfo dan parser EXIF tidak aman untuk rantai IFD siklik. Import memakai preflight marker/dimensi serta sanitasi APP metadata dengan pembacaan orientasi terbatas sebelum decode. PNG memakai validasi inflasi terbatas sebelum decoder, karena batas dimensi saja tidak membatasi payload zlib. Lihat [kontrak import](image_import.md).
